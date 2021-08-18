@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart test</title>
+    <script type="text/javascript">
+        window.onload = function start() {
+            var numberOfitems = 0;
+            function increaseNumberOfItems(target) {
+                numberOfitems++;
+                target.value++;
+                document.getElementById("cart").value = numberOfitems;
+            };
+            document.getElementById("item1").addEventListener("click", function (e) {
+                var itemValues = document.getElementsByName("item1");
+                console.log(e.target);
+                itemValues[0].value++;
+                increaseNumberOfItems(e.target);
+            });
+            document.getElementById("item2").addEventListener("click", function (e) {
+                var itemValues = document.getElementsByName("item2");
+                itemValues[0].value++;
+                increaseNumberOfItems(e.target);
+            });
+            document.getElementById("item3").addEventListener("click", function (e) {
+                var itemValues = document.getElementsByName("item3");
+                itemValues[0].value++;
+                increaseNumberOfItems(e.target);
+            });
+            document.getElementById("item4").addEventListener("click", function (e) {
+                var itemValues = document.getElementsByName("item4");
+                itemValues[0].value++;
+                increaseNumberOfItems(e.target);
+            });
+
+            // Array.prototype.forEach.call(
+            //     document.querySelectorAll('[id^=item]'), function (e) {
+            //         console.log(e);
+            //         e.addEventListener('click', increaseNumberOfItems(e));
+            //     });
+
+            function CreateCartAndPostIt2Server() {
+                let data = { element: "barium" };
+
+                fetch("http://localhost:8081", {
+                    method: "POST",
+                    body: JSON.stringify(data)
+                }).then(res => {
+                    console.log("Request complete! response:", res);
+                });
+
+            }
+
+            document.getElementById("send").addEventListener("click", function (e) {
+                CreateCartAndPostIt2Server();
+
+            });
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <button for="item1" id="item1">item1</button>
+    <input type="text" name="item1" maxlength="4" size="4" value="0"><br><br>
+    <button for="item2" id="item2">item2</button>
+    <input type="text" name="item2" maxlength="4" size="4" value="0"><br><br>
+    <button for="item3" id="item3">item3</button>
+    <input type="text" name="item3" maxlength="4" size="4" value="0"><br><br>
+    <button for="item4" id="item4">item4</button>
+    <input type="text" name="item4" maxlength="4" size="4" value="0"><br><br>
+    <label for="cart">Cart</label>
+    <input type="text" id="cart" name="cart" maxlength="4" size="4"><br><br>
+    <button for="send" id="send">send to server</button>
+
+</body>
+
+</html>
